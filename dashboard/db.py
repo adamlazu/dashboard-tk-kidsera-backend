@@ -20,6 +20,9 @@ def insert_user(data):
     row = collection.insert_one(data)
     return row
 
+def get_user(filter = {}):
+    collection = get_collection('users')
+    return collection.find_one(filter)
 
 def close_db(e=None):
     db = g.pop(current_app.config['DATABASE'], None)
