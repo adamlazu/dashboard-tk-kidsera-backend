@@ -24,6 +24,8 @@ def create_app():
     except OSError:
         pass
     db.init_app(app)
-
+    
+    from . import auth
+    app.register_blueprint(auth.bp) 
     
     return app
