@@ -30,6 +30,15 @@ def close_db(e=None):
     if db is not None:
         db.close() 
 
+def get_blockedtoken(filter = {}):
+    collection = get_collection('token_block_list')
+    return collection.find_one(filter)
+
+def block_token(data):
+    collection = get_collection('token_block_list')
+    row = collection.insert_one(data)
+    return row
+
 def init_db():
     """clear the existing data and create new tables."""    
     db = get_db()    
