@@ -1,5 +1,6 @@
 import os
 from flask import *
+from . import db
 
 
 def create_app():
@@ -10,5 +11,7 @@ def create_app():
         os.makedirs(app.instance_path)
     except OSError:
         pass
+    db.init_app(app)
+
     
     return app
