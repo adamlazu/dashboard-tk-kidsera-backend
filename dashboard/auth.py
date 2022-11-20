@@ -29,3 +29,17 @@ class Register(Resource):
 
 
 api.add_resource(Register,'/API/auth/register')
+
+class Login(Resource):
+    def post(self):
+        email = request.form['email']
+        password = md5(request.form['password'].encode('utf-8')).hexdigest()
+        data = get_user({'email':email})
+        if data['password']==password:
+            access_token = create_access_token(identity=email)
+            return {'success':True,'access_token': access_token}
+        else:
+            return {'success':False, 'message':'wrong password or email'}
+
+
+api.add_resource(Login,'/API/auth/login')
