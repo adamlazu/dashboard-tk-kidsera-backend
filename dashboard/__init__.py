@@ -1,11 +1,23 @@
 import os
 from flask import *
 from . import db
+from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
+from datetime import timedelta
 
 
 def create_app():
     app = Flask(__name__,instance_relative_config= True)
     app.config.from_pyfile('settings.cfg',silent=False)
+    jwt = JWTManager(app)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+
+
+    @jwt.token_in_blocklist_loader
+    def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
+        jti = jwt_payload["jti"]
+        token = db.get_blockedtoken({'jti':jti})
+
+        return token is not None
 
     try:
         os.makedirs(app.instance_path)
