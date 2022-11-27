@@ -11,7 +11,9 @@ def create_app():
     app.config.from_pyfile('settings.cfg',silent=False)
     jwt = JWTManager(app)
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+
     CORS(app, supports_credentials=True)
+
 
 
     @jwt.token_in_blocklist_loader
@@ -29,6 +31,9 @@ def create_app():
     
     from . import auth, student
     app.register_blueprint(auth.bp) 
-    app.register_blueprint(student.bp) 
+    app.register_blueprint(student.bp)
+    
+    from . import auth
+    app.register_blueprint(auth.bp) 
     
     return app

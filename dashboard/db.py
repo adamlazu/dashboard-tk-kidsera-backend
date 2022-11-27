@@ -29,9 +29,14 @@ def insert_user(data):
     row = collection.insert_one(data)
     return row
 
+def get_user(filter = {}):
+    collection = get_collection('users')
+    return collection.find_one(filter)
+
 def getAll_student():
     collection = get_collection('students')
     return collection.find()
+
 
 def get_student(filter = {}):
     collection = get_collection('students')
