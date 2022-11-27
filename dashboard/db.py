@@ -14,6 +14,15 @@ def get_collection(colname):
         get_db()
     return g.db[colname]
 
+def get_student(filter = {}):
+    collection = get_collection('students')
+    row = collection.find_one(filter)
+    return row
+
+def insert_student(data):
+    collection = get_collection('students')
+    row = collection.insert_one(data)
+    return row
 
 def insert_user(data):
     collection = get_collection('users')
@@ -24,6 +33,30 @@ def get_user(filter = {}):
     collection = get_collection('users')
     return collection.find_one(filter)
 
+def getAll_student():
+    collection = get_collection('students')
+    return collection.find()
+
+
+def get_student(filter = {}):
+    collection = get_collection('students')
+    row = collection.find_one(filter)
+    return row
+
+def insert_student(data):
+    collection = get_collection('students')
+    row = collection.insert_one(data)
+    return row
+
+def update_student(filter, newvalues):
+    collection = get_collection('students')
+    return collection.update_one(filter, newvalues)
+
+def delete_student(filter = {}):
+    collection = get_collection('students')
+    return collection.delete_one(filter)
+
+ 
 def close_db(e=None):
     db = g.pop(current_app.config['DATABASE'], None)
     

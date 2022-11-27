@@ -5,7 +5,7 @@ from hashlib import md5
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, get_jwt
 import datetime
 
-bp = Blueprint('auth', name)
+bp = Blueprint('auth', __name__)
 api = Api(bp)
 
 class Register(Resource):
