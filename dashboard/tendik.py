@@ -38,3 +38,10 @@ class Tendik_list(Resource):
 
 
 api.add_resource(Tendik_list,'/API/tendik')
+
+class Tendik(Resource):
+    def get(self, tendik_id):
+        ObjInstance = ObjectId(tendik_id)
+        filter = {'_id':ObjInstance}
+        data = get_tendik(filter)
+        return json.loads(dumps(data))
