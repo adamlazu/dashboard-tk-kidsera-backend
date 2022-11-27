@@ -14,12 +14,20 @@ def get_collection(colname):
         get_db()
     return g.db[colname]
 
+def get_student(filter = {}):
+    collection = get_collection('students')
+    row = collection.find_one(filter)
+    return row
+
+def insert_student(data):
+    collection = get_collection('students')
+    row = collection.insert_one(data)
+    return row
 
 def insert_user(data):
     collection = get_collection('users')
     row = collection.insert_one(data)
     return row
-
 
 def close_db(e=None):
     db = g.pop(current_app.config['DATABASE'], None)
