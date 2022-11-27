@@ -45,3 +45,39 @@ class Tendik(Resource):
         filter = {'_id':ObjInstance}
         data = get_tendik(filter)
         return json.loads(dumps(data))
+    
+    @jwt_required()
+    def put(self, tendik_id):
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
+        if userDetail['is_admin']:
+            ObjInstance = ObjectId(tendik_id)
+            filter = {'_id':ObjInstance}
+            req = request.form
+            newvalues = {"$set":{
+                'nama':req.get('nama'),
+                'jenis_kelamin':req.get('jenis_kelamin'),
+                'ttl':req.get('ttl'),
+                'alamat':req.get('alamat'),
+                'no_hp':req.get('no_hp'),
+                'email':req.get('email'),
+                'pendidikan_terakhir':req.get('pendidikan_terakhir')
+            }}
+            update_tendik(filter, newvalues)
+            return{"success":True}
+        else:
+            return{"success":False, "msg":"only admin can perform this action"}
+
+    @jwt_required()
+    def delete(self, tendik_id):
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
+        if userDetail['is_admin']:
+            ObjInstance = ObjectId(tendik_id)
+            filter = {'_id':ObjInstance}
+            delete_tendik(filter)
+            return{"success":True}
+        else:
+            return{"success":False, "msg":"only admin can perform this action"}
+
+api.add_resource(Tendik,'/API/tendik/<tendik_id>')
