@@ -33,9 +33,7 @@ def create_app():
     app.register_blueprint(auth.bp) 
     app.register_blueprint(student.bp)
     
-    from . import auth
-    app.register_blueprint(auth.bp)
-    
+  
     from . import tendik
     app.register_blueprint(tendik.bp)
     
