@@ -14,13 +14,15 @@ def get_collection(colname):
         get_db()
     return g.db[colname]
 
-def get_user(filter = {}):
-    collection = get_collection('users')
-    return collection.find_one(filter)
+def get_student(filter = {}):
+    collection = get_collection('students')
+    row = collection.find_one(filter)
+    return row
 
-def delete_user(filter = {}):
-    collection = get_collection('users')
-    return collection.delete_one(filter)
+def insert_student(data):
+    collection = get_collection('students')
+    row = collection.insert_one(data)
+    return row
 
 def insert_user(data):
     collection = get_collection('users')
