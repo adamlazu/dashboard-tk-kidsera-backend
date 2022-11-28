@@ -14,22 +14,22 @@ def get_collection(colname):
         get_db()
     return g.db[colname]
 
-#for user
+def get_user(filter = {}):
+    collection = get_collection('users')
+    return collection.find_one(filter)
+
+def delete_user(filter = {}):
+    collection = get_collection('users')
+    return collection.delete_one(filter)
 
 def insert_user(data):
     collection = get_collection('users')
     row = collection.insert_one(data)
     return row
 
-def get_user(filter = {}):
-    collection = get_collection('users')
-    return collection.find_one(filter)
-
-#for student
 def getAll_student():
     collection = get_collection('students')
     return collection.find()
-
 
 def get_student(filter = {}):
     collection = get_collection('students')
