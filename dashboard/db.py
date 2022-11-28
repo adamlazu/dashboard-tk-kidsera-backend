@@ -49,6 +49,28 @@ def delete_student(filter = {}):
     collection = get_collection('students')
     return collection.delete_one(filter)
 
+#for tendik
+def get_tendiks():
+    collection = get_collection('tenaga_pendidik')
+    return collection.find()
+
+def insert_tendik(data):
+    collection = get_collection('tenaga_pendidik')
+    row = collection.insert_one(data)
+    return row
+
+def get_tendik(filter):
+    collection = get_collection('tenaga_pendidik')
+    return collection.find_one(filter)
+
+def update_tendik(filter, newvalues):
+    collection = get_collection('tenaga_pendidik')
+    return collection.update_one(filter, newvalues)
+
+def delete_tendik(data):
+    collection = get_collection("tenaga_pendidik")
+    collection.delete_one(data)
+
  
 def close_db(e=None):
     db = g.pop(current_app.config['DATABASE'], None)
@@ -56,6 +78,7 @@ def close_db(e=None):
     if db is not None:
         db.close() 
 
+#for token
 def get_blockedtoken(filter = {}):
     collection = get_collection('token_block_list')
     return collection.find_one(filter)
