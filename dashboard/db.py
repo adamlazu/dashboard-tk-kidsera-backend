@@ -74,6 +74,10 @@ def delete_tendik(data):
     collection.delete_one(data)
     
 # for rombel
+def get_rombels():
+    collection = get_collection('rombel')
+    return collection.find()
+
 def get_rombel(filter = {}):
     collection = get_collection('rombel')
     row = collection.find_one(filter)

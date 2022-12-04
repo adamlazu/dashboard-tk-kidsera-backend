@@ -56,6 +56,11 @@ api.add_resource(Rombel, "/API/rombel/<rombel_id>")
 
 class Rombels(Resource):
     @jwt_required()
+    def get(self):
+        data = get_rombels()
+        return json.loads(dumps(data))
+
+    @jwt_required()
     def post(self):
         email = get_jwt_identity()
         userDetail = get_user({"email":email})
