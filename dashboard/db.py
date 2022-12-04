@@ -14,6 +14,7 @@ def get_collection(colname):
         get_db()
     return g.db[colname]
 
+# for user
 def get_user(filter = {}):
     collection = get_collection('users')
     return collection.find_one(filter)
@@ -27,9 +28,10 @@ def insert_user(data):
     row = collection.insert_one(data)
     return row
 
-def getAll_student():
+# for student
+def getAll_student(filter = {}):
     collection = get_collection('students')
-    return collection.find()
+    return collection.find(filter)
 
 def get_student(filter = {}):
     collection = get_collection('students')
@@ -49,7 +51,7 @@ def delete_student(filter = {}):
     collection = get_collection('students')
     return collection.delete_one(filter)
 
-#for tendik
+# for tendik
 def get_tendiks():
     collection = get_collection('tenaga_pendidik')
     return collection.find()
@@ -70,6 +72,20 @@ def update_tendik(filter, newvalues):
 def delete_tendik(data):
     collection = get_collection("tenaga_pendidik")
     collection.delete_one(data)
+    
+# for rombel
+def get_rombel(filter = {}):
+    collection = get_collection('rombel')
+    row = collection.find_one(filter)
+    return row
+
+def update_rombel(filter, new_val):
+    collection = get_collection('rombel')
+    collection.update_one(filter, new_val)
+
+def insert_rombel(data):
+    collection = get_collection('rombel')
+    collection.insert_one(data)
 
  
 def close_db(e=None):
@@ -78,7 +94,7 @@ def close_db(e=None):
     if db is not None:
         db.close() 
 
-#for token
+# for token
 def get_blockedtoken(filter = {}):
     collection = get_collection('token_block_list')
     return collection.find_one(filter)
