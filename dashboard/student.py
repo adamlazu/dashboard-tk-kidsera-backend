@@ -1,7 +1,7 @@
 import json
 from bson.json_util import dumps
 from flask import Blueprint, request
-from .db import insert_student, get_student
+from .db import *
 from bson.objectid import ObjectId
 from flask_restful import Api, Resource
 from flask_jwt_extended import jwt_required
@@ -15,7 +15,7 @@ class Students(Resource):
         data = getAll_student()
         return json.loads(dumps(data))
     
-    @jwt_required()
+    # @jwt_required()
     def post(self):
         req = request.form
         data = {
@@ -25,7 +25,7 @@ class Students(Resource):
             'nik' : req['nik'], 
             'no_kk' : req['no_kk'], 
             'tingkat_kelas' : req['tingkat_kelas'], 
-            'id_rombongan_belajar' : int(req['id_rombongan_belajar']), 
+            'tahun_ajaran' : req['tahun_ajaran'],
             'tanggal_masuk' :req['tanggal_masuk'],
             'tanggal_lulus' :req['tanggal_lulus'],
             'nomor_induk' : req['nomor_induk'],
@@ -37,7 +37,9 @@ class Students(Resource):
             'nama_ayah' : req['nama_ayah'],
             'nama_ibu' : req['nama_ibu'],
             'pekerjaan_ayah' : req['pekerjaan_ayah'],
-            'pekerjaan_ibu' : req['pekerjaan_ibu']
+            'pekerjaan_ibu' : req['pekerjaan_ibu'],
+            'no_telp_ayah' : req['no_telp_ayah'],
+            'no_telp_ibu' : req['no_telp_ibu']
         }
         insert_student(data)
         return {'Success': True}
@@ -45,7 +47,7 @@ class Students(Resource):
 api.add_resource(Students, '/API/students')
 
 class Student(Resource):
-    @jwt_required()
+    # @jwt_required()
     def get(self, student_id):
         id = student_id
         ObjInstance = ObjectId(id)
@@ -61,7 +63,6 @@ class Student(Resource):
             return {"message":"ID not valid"}
         else:
             req = request.form
-            name = req.get("nama")
             newVal = {
                 "$set":{
                     'nama' : req['nama'],
@@ -70,7 +71,6 @@ class Student(Resource):
                     'nik' : req['nik'], 
                     'no_kk' : req['no_kk'], 
                     'tingkat_kelas' : req['tingkat_kelas'], 
-                    'id_rombongan_belajar' : int(req['id_rombongan_belajar']), 
                     'tanggal_masuk' :req['tanggal_masuk'],
                     'tanggal_lulus' :req['tanggal_lulus'],
                     'nomor_induk' : req['nomor_induk'],
@@ -83,6 +83,8 @@ class Student(Resource):
                     'nama_ibu' : req['nama_ibu'],
                     'pekerjaan_ayah' : req['pekerjaan_ayah'],
                     'pekerjaan_ibu' : req['pekerjaan_ibu'],
+                    'no_telp_ayah' : req['no_telp_ayah'],
+                    'no_telp_ibu' : req['no_telp_ibu']
                 }
             }
 
