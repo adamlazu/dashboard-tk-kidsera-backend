@@ -45,8 +45,7 @@ class Tendik(Resource):
         filter = {'_id':ObjInstance}
         data = get_tendik(filter)
         return json.loads(dumps(data))
-
-
+    
     @jwt_required()
     def put(self, tendik_id):
         user = get_jwt_identity()
