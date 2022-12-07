@@ -27,7 +27,9 @@ class Tendik_list(Resource):
                 'alamat':req.get('alamat'),
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
-                'pendidikan_terakhir':req.get('pendidikan_terakhir')
+                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'tahun_ajaran': req.get('tahun_ajaran'),
+                'kelas_mengajar': req.get('kelas_mengajar')
             }
             insert_tendik(data)
             return{"success":True}
@@ -61,7 +63,9 @@ class Tendik(Resource):
                 'alamat':req.get('alamat'),
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
-                'pendidikan_terakhir':req.get('pendidikan_terakhir')
+                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'tahun_ajaran': req.get('tahun_ajaran'),
+                'kelas_mengajar': req.get('kelas_mengajar')
             }}
             update_tendik(filter, newvalues)
             return{"success":True}

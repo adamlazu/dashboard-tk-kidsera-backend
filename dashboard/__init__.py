@@ -29,14 +29,14 @@ def create_app():
         pass
     db.init_app(app)
     
-    from . import auth, student, tendik, ruangan, sarpras
+    
+    from . import auth, student, tendik, ruangan, sarpras, rombel
     app.register_blueprint(auth.bp) 
     app.register_blueprint(student.bp)
     app.register_blueprint(tendik.bp)
     app.register_blueprint(ruangan.bp)
     app.register_blueprint(sarpras.bp)
-
-    
-  
+    app.register_blueprint(sarpras.bp)
+    app.register_blueprint(rombel.bp)    
     
     return app
