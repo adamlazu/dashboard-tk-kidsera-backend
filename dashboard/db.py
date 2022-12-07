@@ -91,12 +91,42 @@ def insert_rombel(data):
     collection = get_collection('rombel')
     collection.insert_one(data)
 
- 
-def close_db(e=None):
-    db = g.pop(current_app.config['DATABASE'], None)
-    
-    if db is not None:
-        db.close() 
+#for ruangan
+def get_ruangans():
+    collection = get_collection('ruangan')
+    return collection.find()
+
+def insert_ruangan(data):
+    collection = get_collection('ruangan')
+    row = collection.insert_one(data)
+    return row
+
+def get_ruangan(filter = {}):
+    collection = get_collection('ruangan')
+    return collection.find_one(filter)
+
+#for sarpras
+def get_allsarpras(filter={}):
+    collection = get_collection('sarpras')
+    return collection.find(filter)
+
+def insert_sarpras(data):
+    collection = get_collection('sarpras')
+    row = collection.insert_one(data)
+    return row
+
+def update_sarpras(filter, newvalues):
+    collection = get_collection('sarpras')
+    return collection.update_one(filter, newvalues)
+
+def delete_sarpras(filter):
+    collection = get_collection("sarpras")
+    collection.delete_one(filter)
+
+def get_sarpras(filter):
+    collection = get_collection('sarpras')
+    return collection.find_one(filter)
+
 
 # for token
 def get_blockedtoken(filter = {}):
@@ -108,6 +138,11 @@ def block_token(data):
     row = collection.insert_one(data)
     return row
 
+def close_db(e=None):
+    db = g.pop(current_app.config['DATABASE'], None)
+    
+    if db is not None:
+        db.close() 
 def init_db():
     """clear the existing data and create new tables."""    
     db = get_db()    
@@ -122,4 +157,3 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-
