@@ -55,25 +55,25 @@ class Rombel(Resource):
 api.add_resource(Rombel, "/API/rombel/<rombel_id>")
 
 class Rombels(Resource):
-    @jwt_required()
+    # @jwt_required()
     def get(self):
         data = get_rombels()
         return json.loads(dumps(data))
 
-    @jwt_required()
+    # @jwt_required()
     def post(self):
-        email = get_jwt_identity()
-        userDetail = get_user({"email":email})
-        if userDetail['is_admin']:
-            req = request.form
-            data = {
-                "tahun_ajaran" : req['tahun_ajaran'],
-                "kelas" : req['kelas'],
-                "ruangan" : req['ruangan']
-            }
-            insert_rombel(data)
-            return {"Success" : True, "msg" : "New rombel successfully added"}
-        else:
-            return {"Success" : False, "msg" : "Only admin can perform this action"}
+        # email = get_jwt_identity()
+        # userDetail = get_user({"email":email})
+        # if userDetail['is_admin']:
+        req = request.form
+        data = {
+            "tahun_ajaran" : req['tahun_ajaran'],
+            "kelas" : req['kelas'],
+            "ruangan" : req['ruangan']
+        }
+        insert_rombel(data)
+        return {"Success" : True, "msg" : "New rombel successfully added"}
+        # else:
+        #     return {"Success" : False, "msg" : "Only admin can perform this action"}
 
 api.add_resource(Rombels, "/API/rombel")
