@@ -36,7 +36,6 @@ def create_app():
     app.register_blueprint(tendik.bp)
     app.register_blueprint(ruangan.bp)
     app.register_blueprint(sarpras.bp)
-    app.register_blueprint(sarpras.bp)
     app.register_blueprint(rombel.bp)    
     
     return app

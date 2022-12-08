@@ -76,7 +76,18 @@ def delete_tendik(data):
 # for rombel
 def get_rombels():
     collection = get_collection('rombel')
-    return collection.find()
+    student = get_collection('students')
+    pipeline = [
+        {
+            "$lookup" : {
+                "from" : "students",
+                "localField" : "tahun_ajaran",
+                "foreignField" : "tahun_ajaran",
+                "as" : "tahun_ajaran"
+            }
+        }
+    ]
+    return collection.aggregate(pipeline)
 
 def get_rombel(filter = {}):
     collection = get_collection('rombel')
