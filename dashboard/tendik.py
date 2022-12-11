@@ -9,9 +9,9 @@ import json
 bp = Blueprint('tendik', __name__)
 api = Api(bp)
 
-class Tendik_list(Resource):
+class Guru_list(Resource):
     def get(self):
-        data = get_tendiks()
+        data = get_tendiks({'status':'guru'})
         return json.loads(dumps(data))
     
     @jwt_required()
@@ -28,8 +28,7 @@ class Tendik_list(Resource):
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
                 'pendidikan_terakhir':req.get('pendidikan_terakhir'),
-                'tahun_ajaran': req.get('tahun_ajaran'),
-                'kelas_mengajar': req.get('kelas_mengajar')
+                'status':'guru'
             }
             insert_tendik(data)
             return{"success":True}
@@ -39,7 +38,7 @@ class Tendik_list(Resource):
 
 
 
-api.add_resource(Tendik_list,'/API/tendik')
+api.add_resource(Guru_list,'/API/tendik/guru')
 
 class Tendik(Resource):
     def get(self, tendik_id):
@@ -64,8 +63,7 @@ class Tendik(Resource):
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
                 'pendidikan_terakhir':req.get('pendidikan_terakhir'),
-                'tahun_ajaran': req.get('tahun_ajaran'),
-                'kelas_mengajar': req.get('kelas_mengajar')
+                'status':req.get('status')
             }}
             update_tendik(filter, newvalues)
             return{"success":True}
@@ -85,3 +83,31 @@ class Tendik(Resource):
             return{"success":False, "msg":"only admin can perform this action"}
 
 api.add_resource(Tendik,'/API/tendik/<tendik_id>')
+
+class NonGuru_list(Resource):
+    def get(self):
+        data = get_tendiks({'status':'non-guru'})
+        return json.loads(dumps(data))
+    
+    @jwt_required()
+    def post(self):
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
+        if userDetail['is_admin']:
+            req = request.form
+            data = {
+                'nama':req.get('nama'),
+                'jenis_kelamin':req.get('jenis_kelamin'),
+                'ttl':req.get('ttl'),
+                'alamat':req.get('alamat'),
+                'no_hp':req.get('no_hp'),
+                'email':req.get('email'),
+                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'status':'non-guru'
+            }
+            insert_tendik(data)
+            return{"success":True}
+        else:
+            return{"success":False, "msg":"only admin can perform this action"}
+
+api.add_resource(NonGuru_list,'/API/tendik/nonguru')
